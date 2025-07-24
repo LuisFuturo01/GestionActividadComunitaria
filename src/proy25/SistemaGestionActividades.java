@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat; // Import added for date parsing
+import java.text.SimpleDateFormat;
 
 public class SistemaGestionActividades {
     Scanner lectorEntrada = new Scanner(System.in);
@@ -428,7 +428,6 @@ public class SistemaGestionActividades {
         return new java.util.Date(sqlTimestamp.getTime());
     }
 
-    // New methods for adding and managing activities and people from GUI
     public String agregarOrganizador(String nombre, String email, String institucion) {
         String idOrganizador = String.format("ORG-%03d", contadorIdOrganizador++);
         Organizador nuevoOrganizador = new Organizador(idOrganizador, nombre, email, institucion);
@@ -526,13 +525,7 @@ public class SistemaGestionActividades {
                 break;
             }
         }
-
-        if (actividadParaInscribir == null) {
-            System.out.println("La actividad con ID " + actividadId + " no existe.");
-            return false;
-        }
         
-        // Check if participant is already enrolled
         if (actividadParaInscribir.getListaParticipantes().contains(participanteParaInscribir)) {
             System.out.println("El participante " + participanteParaInscribir.getNombre() + " ya esta inscrito en la actividad " + actividadParaInscribir.getTitulo() + ".");
             return false;
@@ -542,7 +535,7 @@ public class SistemaGestionActividades {
         Date fechaActualInscripcion = new Date();
         Inscripcion<String> nuevaInscripcion = new Inscripcion<>(identificadorInscripcion, participanteParaInscribir, actividadParaInscribir, fechaActualInscripcion);
         this.inscripcionesRealizadas.add(nuevaInscripcion);
-        actividadParaInscribir.registrarParticipante(participanteParaInscribir); // This method adds to activity's internal list
+        actividadParaInscribir.registrarParticipante(participanteParaInscribir); 
         System.out.println("Inscripcion (ID: " + identificadorInscripcion + ") de " + participanteParaInscribir.getNombre() + " en " + actividadParaInscribir.getTitulo() + " realizada con exito.");
         return true;
     }
